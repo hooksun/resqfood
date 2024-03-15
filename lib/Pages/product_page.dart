@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:resqfood/Objects/retaurant.dart';
+import 'package:resqfood/Widgets/product_header.dart';
 
 class ProductPage extends StatelessWidget {
   final Restaurant restaurant;
@@ -9,7 +10,7 @@ class ProductPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(restaurant.name),),
-      body: restaurant.profileImage == null? null : Hero(tag: restaurant, child: Image(image: restaurant.profileImage!)),
+      body: AspectRatio(aspectRatio: 16/8, child: ProductHeader(restaurant: restaurant,))
     );
   }
 }

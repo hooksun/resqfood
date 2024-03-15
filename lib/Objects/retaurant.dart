@@ -44,7 +44,10 @@ class Restaurant {
       desc: map['desc'],
       profileImagePath: profileImagePath,
       backgroundImagePath: backgroundImagePath,
-      profileImage: profileImagePath != null ? SupabaseImageProvider(path: profileImagePath) : null, //TODO: Change to default image
+      profileImage: profileImagePath != null ?
+        SupabaseImageProvider(path: profileImagePath)
+        :
+        const AssetImage('assets/images/default_profile.png') as ImageProvider,
       backgroundImage: backgroundImagePath != null ? SupabaseImageProvider(path: backgroundImagePath): null,
     );
   }
@@ -65,14 +68,4 @@ class Restaurant {
   String get openTimeDesc => "Open at: $openTime - $closeTime";
 
   String get finalPriceAsString => "Rp. $finalPrice";
-
-  // Future<Uint8List?> get profileImageFuture{
-  //   if(_profileImageFuture != null){
-  //     return _profileImageFuture!;
-  //   }
-  //   if(profileImagePath == null){
-  //     return Future.value(null);
-  //   }
-  //   return supabase.storage.from('test').download(profileImagePath!);
-  // }
 }

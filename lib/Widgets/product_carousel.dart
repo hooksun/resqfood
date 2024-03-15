@@ -1,21 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:resqfood/Widgets/product_collection.dart';
 import 'package:resqfood/Widgets/product_container.dart';
 import 'package:resqfood/Objects/retaurant.dart';
-import 'package:resqfood/main.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 const int lengthLimit = 5;
 
-class ProductCarousel extends StatefulWidget {
+class ProductCarousel extends ProductCollection {
   final String label;
   const ProductCarousel({super.key, required this.label});
+
+  @override
+  PostgrestTransformBuilder<List<Map<String, dynamic>>> modifyQuery(PostgrestTransformBuilder<List<Map<String, dynamic>>> q){
+    return q.limit(5);
+  }
 
   @override
   State<ProductCarousel> createState() => _ProductCarouselState();
 }
 
 class _ProductCarouselState extends State<ProductCarousel> {
-  final query = supabase.from('restaurants').select('*, restaurant_categories(name)').order('id', ascending: true).limit(lengthLimit);
+  Future<List<Restaurant>>? query;
+
+  @override
+  void initState() {
+    query = widget.getItems();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +45,7 @@ class _ProductCarouselState extends State<ProductCarousel> {
           ),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: FutureBuilder<List<Map<String, dynamic>>>(
+            child: FutureBuilder<List<Restaurant>>(
               future: query,
               builder: (context, snapshot) {
                 List<Widget>? products;
@@ -64,7 +76,7 @@ class _ProductCarouselState extends State<ProductCarousel> {
                         bottom: 1,
                       ),
                       width: screenWidth * widthFraction,
-                      child: ProductContainer(restaurant: Restaurant.fromMap(snapshot.data![index])),
+                      child: ProductContainer(restaurant: snapshot.data![index]),
                     )
                   );
                 }
@@ -76,8 +88,18 @@ class _ProductCarouselState extends State<ProductCarousel> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          ElevatedButton(onPressed: (){}, child: const Icon(Icons.arrow_forward_ios_rounded)),
-                          const Text("See More")
+                          Ink(
+                            decoration: BoxDecoration(
+                              color: Colors.orange,
+                              borderRadius: BorderRadiusDirectional.circular(1000)
+                            ),
+                            child: IconButton(
+                              iconSize: 30,
+                              onPressed: (){},
+                              icon: const Icon(Icons.arrow_forward_ios_rounded, color: Colors.white,)
+                            ),
+                          ),
+                          const Text("See More", style: TextStyle(fontWeight: FontWeight.bold),)
                         ],
                       ),
                     )
