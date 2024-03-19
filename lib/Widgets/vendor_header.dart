@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:resqfood/Objects/retaurant.dart';
-import 'package:resqfood/Widgets/favorite_button.dart';
-import 'package:resqfood/Widgets/skeletonized_image.dart';
+import 'package:resqfood/objects/vendor.dart';
+import 'package:resqfood/widgets/favorite_button.dart';
+import 'package:resqfood/widgets/skeletonized_image.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class ProductHeader extends StatelessWidget {
-  const ProductHeader({
+class VendorHeader extends StatelessWidget {
+  const VendorHeader({
     super.key,
-    required this.restaurant,
+    required this.vendor,
   });
 
-  final Restaurant restaurant;
+  final Vendor vendor;
 
   @override
   Widget build(BuildContext context) {
     return Hero(
-      tag: restaurant,
+      tag: vendor,
       child: ColoredBox(
         color: Colors.grey.shade400,
         child: Stack(
@@ -26,14 +26,14 @@ class ProductHeader extends StatelessWidget {
               fit: BoxFit.cover,
               child: ColorFiltered(
                 colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.srcOver),
-                child: restaurant.backgroundImage != null ? Image(image: restaurant.backgroundImage!,) : null
+                child: vendor.backgroundImage != null ? Image(image: vendor.backgroundImage!,) : null
               ),
             ),
             Positioned(
               top: 0,
               right: 0,
               child: Skeleton.ignore(
-                child: FavoriteButton(restaurant: restaurant,),
+                child: FavoriteButton(vendor: vendor,),
               ),
             ),
             Positioned(
@@ -52,17 +52,17 @@ class ProductHeader extends StatelessWidget {
                         color: Colors.white,
                         borderRadius: BorderRadius.all(Radius.circular(1000))
                       ),
-                      child: restaurant.profileImage == null ? null :
+                      child: vendor.profileImage == null ? null :
                         Image(
                           frameBuilder: skeletonizedImageFrameBuilder,
-                          image: restaurant.profileImage!
+                          image: vendor.profileImage!
                         ),
                     ),
                   ),
                   Material(
                     color: Colors.transparent,
                     child: Text(
-                      restaurant.name,
+                      vendor.name,
                       style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                   )

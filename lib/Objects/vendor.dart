@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:resqfood/Objects/supabase_image_provider.dart';
+import 'package:resqfood/objects/supabase_image_provider.dart';
 import 'package:resqfood/main.dart';
 
-class Restaurant {
+class Vendor {
   int id;
   String name;
   String category;
@@ -12,7 +12,7 @@ class Restaurant {
   String closeTime;
   double productPrice;
   double productDiscount;
-  String desc;
+  String? desc;
   String? profileImagePath;
   String? backgroundImagePath;
   ImageProvider? profileImage;
@@ -20,7 +20,7 @@ class Restaurant {
 
   bool? favorited;
 
-  Restaurant(this.id,
+  Vendor(this.id,
   {
     required this.name,
     this.category = '',
@@ -28,20 +28,20 @@ class Restaurant {
     this.closeTime = '00:00',
     this.productPrice = 0,
     this.productDiscount = 0,
-    this.desc = '',
+    this.desc,
     this.profileImagePath,
     this.backgroundImagePath,
     this.profileImage,
     this.backgroundImage,
   });
 
-  static Restaurant fromMap(Map<String, dynamic> map){
+  static Vendor fromMap(Map<String, dynamic> map){
     String? profileImagePath = map['profile_image_path'];
     String? backgroundImagePath = map['background_image_path'];
-    return Restaurant(
+    return Vendor(
       map['id'],
       name: map['name'],
-      category: map['restaurant_categories']['name'],
+      category: map['vendor_categories']['name'],
       openTime: map['open_time'].toString().substring(0, 5),
       closeTime: map['close_time'].toString().substring(0, 5),
       productPrice: (map['product_price'] ?? 0).toDouble(),
@@ -57,7 +57,7 @@ class Restaurant {
     );
   }
 
-  static Restaurant get fake => Restaurant(
+  static Vendor get fake => Vendor(
     0,
     name: 'Starbucks Coffee',
     category: 'Coffee & Pastry',
@@ -68,8 +68,8 @@ class Restaurant {
     desc: '',
   );
 
-  static Future<Restaurant> fromID(int id) async{
-    return Restaurant.fromMap(await supabase.from('restaurants').select('*').eq('id', id).single());
+  static Future<Vendor> fromID(int id) async{
+    return Vendor.fromMap(await supabase.from('vendors').select('*').eq('id', id).single());
   }
 
   Future<bool> getFavoriteByUser({required String userID}) async{
@@ -81,16 +81,16 @@ class Restaurant {
   }
 
   Future<void> updateFavoriteByUser({required String userID}) async{
-    final data = await supabase.from('user_favorites').select().eq('user_id', userID).eq('restaurant_id', id);
+    final data = await supabase.from('user_favorites').select().eq('user_id', userID).eq('vendor_id', id);
     favorited = data.isNotEmpty;
   }
 
   Future<void> setFavoriteByUser({required String userID, required bool favorite}) async{
     if(favorite){
-      await supabase.from('user_favorites').upsert({'user_id': userID, 'restaurant_id': id});
+      await supabase.from('user_favorites').upsert({'user_id': userID, 'vendor_id': id});
     }
     else{
-      await supabase.from('user_favorites').delete().eq('user_id', userID).eq('restaurant_id', id);
+      await supabase.from('user_favorites').delete().eq('user_id', userID).eq('vendor_id', id);
     }
     favorited = favorite;
   }

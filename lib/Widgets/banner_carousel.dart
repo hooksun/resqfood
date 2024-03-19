@@ -2,8 +2,8 @@ import 'dart:ui';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:loop_page_view/loop_page_view.dart';
-import 'package:resqfood/Objects/supabase_image_provider.dart';
-import 'package:resqfood/Widgets/skeletonized_image.dart';
+import 'package:resqfood/objects/supabase_image_provider.dart';
+import 'package:resqfood/widgets/skeletonized_image.dart';
 import 'package:resqfood/main.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 

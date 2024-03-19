@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:resqfood/Objects/retaurant.dart';
-import 'package:resqfood/Pages/product_page.dart';
-import 'package:resqfood/Widgets/product_header.dart';
+import 'package:resqfood/objects/vendor.dart';
+import 'package:resqfood/pages/vendor_page.dart';
+import 'package:resqfood/widgets/vendor_header.dart';
 
-class ProductContainer extends StatelessWidget {
-  final Restaurant restaurant;
-  const ProductContainer({super.key, required this.restaurant});
+class VendorContainer extends StatelessWidget {
+  final Vendor vendor;
+  const VendorContainer({super.key, required this.vendor});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class ProductContainer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => ProductPage(restaurant: restaurant)
+                  builder: (_) => VendorPage(vendor: vendor)
                 )
               );
             },
@@ -32,7 +32,7 @@ class ProductContainer extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 5,
-                  child: ProductHeader(restaurant: restaurant),
+                  child: VendorHeader(vendor: vendor),
                 ),
                 Expanded(
                   flex: 4,
@@ -47,11 +47,11 @@ class ProductContainer extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(restaurant.category, style: const TextStyle(fontWeight: FontWeight.bold),),
-                              Text(restaurant.openTimeDesc, style: const TextStyle(fontSize: 10),),
+                              Text(vendor.category, style: const TextStyle(fontWeight: FontWeight.bold),),
+                              Text(vendor.openTimeDesc, style: const TextStyle(fontSize: 10),),
                             ],
                           ),
-                          Text(restaurant.finalPriceAsString, style: const TextStyle(fontWeight: FontWeight.bold),)
+                          Text(vendor.finalPriceAsString, style: const TextStyle(fontWeight: FontWeight.bold),)
                         ],
                       ),
                     ),

@@ -1,13 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:resqfood/Objects/retaurant.dart';
 import 'package:resqfood/main.dart';
+import 'package:resqfood/objects/vendor.dart';
 
 class FavoriteButton extends StatefulWidget {
-  const FavoriteButton({super.key, required this.restaurant,});
+  const FavoriteButton({super.key, required this.vendor,});
 
-  final Restaurant restaurant;
+  final Vendor vendor;
 
   @override
   State<FavoriteButton> createState() => _FavoriteButtonState();
@@ -22,9 +20,9 @@ class _FavoriteButtonState extends State<FavoriteButton> {
     if(supabase.auth.currentUser == null){
       return;
     }
-    favorited = widget.restaurant.favorited;
+    favorited = widget.vendor.favorited;
     () async{
-      bool fav = await widget.restaurant.getFavoriteByUser(userID: supabase.auth.currentUser!.id);
+      bool fav = await widget.vendor.getFavoriteByUser(userID: supabase.auth.currentUser!.id);
       if(!mounted){
         return;
       }
@@ -42,7 +40,7 @@ class _FavoriteButtonState extends State<FavoriteButton> {
         setState(() {
           favorited = !favorited!;
           if(supabase.auth.currentUser != null){
-            widget.restaurant.setFavoriteByUser(userID: supabase.auth.currentUser!.id, favorite: favorited!);
+            widget.vendor.setFavoriteByUser(userID: supabase.auth.currentUser!.id, favorite: favorited!);
           }
         });
       },
