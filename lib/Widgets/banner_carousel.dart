@@ -22,17 +22,27 @@ class _BannerCarouselState extends State<BannerCarousel> {
 
   @override
   void initState() {
-    query = getImages();
-    autoScroll = RestartableTimer(
-      const Duration(seconds: 5),
-      () => controller.nextPage(duration: const Duration(milliseconds: 350), curve: Curves.easeIn)
-    );
     super.initState();
+    query = getImages();
   }
 
   Future<List<ImageProvider>> getImages() async{
     final data = await supabase.from('advertisements').select('*').order('id', ascending: true);
+    onGetImages();
     return data.map((e) => SupabaseImageProvider(bucket: 'images', path: e['image_path'])).toList();
+  }
+
+  void onGetImages(){
+    autoScroll = RestartableTimer(
+      const Duration(seconds: 5),
+      () => controller.nextPage(duration: const Duration(milliseconds: 350), curve: Curves.easeIn)
+    );
+  }
+
+  @override
+  void dispose(){
+    super.dispose();
+    controller.dispose();
   }
 
   @override

@@ -47,7 +47,7 @@ class ProductContainer extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(restaurant.category ?? '', style: const TextStyle(fontWeight: FontWeight.bold),),
+                              Text(restaurant.category, style: const TextStyle(fontWeight: FontWeight.bold),),
                               Text(restaurant.openTimeDesc, style: const TextStyle(fontSize: 10),),
                             ],
                           ),

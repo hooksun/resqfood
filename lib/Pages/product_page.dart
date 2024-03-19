@@ -10,7 +10,13 @@ class ProductPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(restaurant.name),),
-      body: AspectRatio(aspectRatio: 16/8, child: ProductHeader(restaurant: restaurant,))
+      body: Column(
+        children: [
+          AspectRatio(aspectRatio: 16/8, child: ProductHeader(restaurant: restaurant,)),
+          Text(restaurant.category),
+
+        ],
+      )
     );
   }
 }

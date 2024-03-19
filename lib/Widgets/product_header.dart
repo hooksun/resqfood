@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:resqfood/Objects/retaurant.dart';
+import 'package:resqfood/Widgets/favorite_button.dart';
 import 'package:resqfood/Widgets/skeletonized_image.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -32,13 +33,7 @@ class ProductHeader extends StatelessWidget {
               top: 0,
               right: 0,
               child: Skeleton.ignore(
-                child: IconButton(
-                  iconSize: 30,
-                  onPressed: () {
-                    
-                  },
-                  icon: const Icon(Icons.favorite_border, color: Colors.white),
-                ),
+                child: FavoriteButton(restaurant: restaurant,),
               ),
             ),
             Positioned(
